@@ -76,4 +76,15 @@ public class TaskModel implements Serializable {
     void setPerformer(long performer) {
         this.performer = performer;
     }
+
+    @Override
+    public String toString() {
+        return "TaskModel{" +
+                "title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", time='" + time + '\'' +
+                ", status='" + status + '\'' +
+                ", performer=" + performer +
+                '}';
+    }
 }

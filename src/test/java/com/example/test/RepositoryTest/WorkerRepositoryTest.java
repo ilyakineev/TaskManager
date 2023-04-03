@@ -20,20 +20,8 @@ import org.springframework.test.web.servlet.MockMvc;
 @SpringBootTest
 @AutoConfigureMockMvc
 public class WorkerRepositoryTest {
-    @Autowired
-    private MockMvc mockMvc;
     @MockBean
     private DefaultWorkerRepository defaultWorkerRepository;
-
-    @BeforeAll
-    public static void initDB() {
-
-    }
-
-    @AfterAll
-    public static void removeDB() {
-
-    }
 
     @Test
     public void createWorkerTest() {

@@ -67,7 +67,7 @@ public class ControllerWorkerTest {
 
     @Test
     public void deleteWorkerByIdTest() throws Exception {
-        mockMvc.perform(delete("/workers/{id}",4))
+        mockMvc.perform(delete("/workers/{id}", 4))
                .andExpect(status().isOk());
     }
 }

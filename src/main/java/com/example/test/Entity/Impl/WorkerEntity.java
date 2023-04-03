@@ -10,6 +10,7 @@ public class WorkerEntity implements Worker {
     private String name;
     private String position;
     private String avatar;
+
     public WorkerEntity() {}
 
     public WorkerEntity(

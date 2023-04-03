@@ -32,9 +32,8 @@ public class ControllerTaskTest {
     @Test
     public void createTaskTest() throws Exception {
         TaskModel task = new TaskModel("title", "description", "time", "status", 2);
-        mockMvc.perform(post("/tasks")
-                       .content(objectMapper.writeValueAsString(task))
-                       .contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(post("/tasks").content(objectMapper.writeValueAsString(task))
+                                      .contentType(MediaType.APPLICATION_JSON))
                .andExpect(status().isCreated());
     }
 
@@ -62,9 +61,8 @@ public class ControllerTaskTest {
     @Test
     public void updateTaskByIdTest() throws Exception {
         ModifyTaskModel model = new ModifyTaskModel("title", "description", "time", "status");
-        mockMvc.perform(put("/tasks/{id}", 2)
-                       .content(objectMapper.writeValueAsString(model))
-                       .contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(put("/tasks/{id}", 2).content(objectMapper.writeValueAsString(model))
+                                             .contentType(MediaType.APPLICATION_JSON))
                .andExpect(status().isOk());
     }
 

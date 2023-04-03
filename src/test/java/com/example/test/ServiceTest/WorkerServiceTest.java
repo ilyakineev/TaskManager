@@ -29,7 +29,8 @@ public class WorkerServiceTest {
     @Test
     public void createWorkerTest() {
         WorkerModel worker = new WorkerModel("name", "position", "avatar");
-        Mockito.when(defaultWorkerRepository.createWorker(worker)).thenReturn(true);
+        Mockito.when(defaultWorkerRepository.createWorker(worker))
+               .thenReturn(true);
 
         Assertions.assertThat(defaultWorkerService.createWorker(worker))
                   .as("Result is false.")
@@ -43,7 +44,8 @@ public class WorkerServiceTest {
         workers.add(new WorkerEntity(2, "name", "position", "avatar"));
         workers.add(new WorkerEntity(3, "name", "position", "avatar"));
         workers.add(new WorkerEntity(4, "name", "position", "avatar"));
-        Mockito.when(defaultWorkerRepository.getAllWorkers()).thenReturn(workers);
+        Mockito.when(defaultWorkerRepository.getAllWorkers())
+               .thenReturn(workers);
 
         final Collection<WorkerModel> result = defaultWorkerService.getAllWorkers();
         Assertions.assertThat(result)
@@ -56,8 +58,9 @@ public class WorkerServiceTest {
 
     @Test
     public void getWorkerByIdTest() {
-        Worker worker = new WorkerEntity(1,"name", "position", "avatar");
-        Mockito.when(defaultWorkerRepository.getWorkerById(1)).thenReturn(Optional.of(worker));
+        Worker worker = new WorkerEntity(1, "name", "position", "avatar");
+        Mockito.when(defaultWorkerRepository.getWorkerById(1))
+               .thenReturn(Optional.of(worker));
 
         Assertions.assertThat(defaultWorkerService.getWorkerById(1))
                   .as("Result is false.")
@@ -67,7 +70,8 @@ public class WorkerServiceTest {
     @Test
     public void modifyWorkerTest() {
         WorkerModel worker = new WorkerModel("name", "position", "avatar");
-        Mockito.when(defaultWorkerRepository.modifyWorker(1, worker)).thenReturn(true);
+        Mockito.when(defaultWorkerRepository.modifyWorker(1, worker))
+               .thenReturn(true);
 
         Assertions.assertThat(defaultWorkerService.modifyWorker(1, worker))
                   .as("Result is false.")
@@ -76,7 +80,8 @@ public class WorkerServiceTest {
 
     @Test
     public void deleteWorkerByIdTest() {
-        Mockito.when(defaultWorkerService.deleteWorkerById(1)).thenReturn(true);
+        Mockito.when(defaultWorkerService.deleteWorkerById(1))
+               .thenReturn(true);
 
         Assertions.assertThat(defaultWorkerService.deleteWorkerById(1))
                   .as("Result is false.")

@@ -22,6 +22,7 @@ public class DefaultTaskRepository implements TaskRepository {
     public DefaultTaskRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
+
     @Override
     public boolean createTask(TaskModel task) {
         int result = jdbcTemplate.update("INSERT INTO task (title, description, time, status, performer) VALUES(?,?,?,?,?)",
@@ -32,35 +33,35 @@ public class DefaultTaskRepository implements TaskRepository {
     @Override
     public Collection<Task> getAllTasks() {
         return jdbcTemplate.query("SELECT id, title, description, time, status, performer FROM task",
-                                                    BeanPropertyRowMapper.newInstance(TaskEntity.class))
-                                            .stream()
-                                            .map(e -> (Task) e)
-                                            .toList();
+                                   BeanPropertyRowMapper.newInstance(TaskEntity.class))
+                           .stream()
+                           .map(e -> (Task) e)
+                           .toList();
     }
 
     @Override
     public Optional<Task> getTaskById(long id) {
-        Task task = jdbcTemplate.queryForObject("SELECT id, title, description, time, status, performer FROM task WHERE id=?",
+        Task task = jdbcTemplate.queryForObject("SELECT id, title, description, time, status, performer FROM task WHERE id = ?",
                 BeanPropertyRowMapper.newInstance(TaskEntity.class), id);
         return Optional.of(task);
     }
 
     @Override
     public boolean modifyTask(long id, ModifyTaskModel task) {
-        int result = jdbcTemplate.update("UPDATE task SET title=?, description=?, time=?, status=? WHERE id=?",
+        int result = jdbcTemplate.update("UPDATE task SET title = ?, description = ?, time = ?, status = ? WHERE id = ?",
                 task.getTitle(), task.getDescription(), task.getTime(), task.getStatus(), id);
         return isModifyEntity(result);
     }
 
     @Override
     public boolean deleteTaskById(long id) {
-        int result = jdbcTemplate.update("DELETE FROM task WHERE id=?", id);
+        int result = jdbcTemplate.update("DELETE FROM task WHERE id = ?", id);
         return isModifyEntity(result);
     }
 
     @Override
     public boolean assignWorkerToTask(long taskId, long workerId) {
-        int result = jdbcTemplate.update("UPDATE task SET performer=? WHERE id=?",
+        int result = jdbcTemplate.update("UPDATE task SET performer=? WHERE id = ?",
                 workerId, taskId);
         return isModifyEntity(result);
     }

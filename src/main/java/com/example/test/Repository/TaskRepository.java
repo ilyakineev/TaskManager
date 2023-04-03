@@ -13,7 +13,7 @@ public interface TaskRepository {
 
     /**
      * Создание задачи.
-     * @param task Работник
+     * @param task Модель задачи.
      * @return Результат операции.
      */
     boolean createTask(TaskModel task);
@@ -42,7 +42,7 @@ public interface TaskRepository {
     /**
      * Удаление задачи.
      * @param id Идентификатор задачи.
-     * @return результаит операции.
+     * @return Результаит операции.
      */
     boolean deleteTaskById(long id);
 

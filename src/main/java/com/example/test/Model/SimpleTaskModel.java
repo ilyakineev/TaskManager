@@ -1,11 +1,15 @@
 package com.example.test.Model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.io.Serial;
+import java.io.Serializable;
 
 /**
  * Простая модель задачи.
  */
-public class SimpleTaskModel {
+public class SimpleTaskModel implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
     @JsonProperty("id")
     private long id;
     @JsonProperty("title")
@@ -13,8 +17,7 @@ public class SimpleTaskModel {
     @JsonProperty("status")
     private String status;
 
-    public SimpleTaskModel() {
-    }
+    public SimpleTaskModel() {}
 
     public SimpleTaskModel(long id, String title, String status) {
         this.id = id;

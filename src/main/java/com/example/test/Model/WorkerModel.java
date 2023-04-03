@@ -1,11 +1,15 @@
 package com.example.test.Model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.io.Serial;
+import java.io.Serializable;
 
 /**
  * Модель работника.
  */
-public class WorkerModel {
+public class WorkerModel implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
     @JsonProperty("name")
     private String name;
     @JsonProperty("position")

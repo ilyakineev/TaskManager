@@ -12,7 +12,7 @@ public interface WorkerRepository {
 
     /**
      * Создание работника.
-     * @param worker Новый работник.
+     * @param worker Модель работника.
      * @return Результат операции.
      */
     boolean createWorker(WorkerModel worker);

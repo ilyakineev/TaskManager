@@ -30,7 +30,7 @@ public class WorkerController {
 
     /**
      * Создание работника.
-     * @param worker Новый работник.
+     * @param worker Модель работника.
      * @return Результат операции.
      */
     @PostMapping(value = "/workers")
@@ -55,7 +55,7 @@ public class WorkerController {
     /**
      * Получение работника по идентификатору.
      * @param id Идентификатор работника.
-     * @return Работник.
+     * @return Модель работника.
      */
     @GetMapping(value = "/workers/{id}")
     public ResponseEntity<?> readWorker(
@@ -69,7 +69,7 @@ public class WorkerController {
     /**
      * Изменение данных работника.
      * @param id Идентификатор работника.
-     * @param worker Работник.
+     * @param worker Модель работника.
      * @return Результат операции.
      */
     @PutMapping(value = "/workers/{id}")
@@ -84,7 +84,7 @@ public class WorkerController {
     /**
      * Удаление работника.
      * @param id Идентификатор работника.
-     * @return результаит операции.
+     * @return Результаит операции.
      */
     @DeleteMapping(value = "/workers/{id}")
     public ResponseEntity<?> deleteWorker(

@@ -31,7 +31,8 @@ public class TaskServiceTest {
     @Test
     public void createTaskTest() {
         TaskModel task = new TaskModel("title", "description", "time", "status", 1);
-        Mockito.when(defaultTaskRepository.createTask(task)).thenReturn(true);
+        Mockito.when(defaultTaskRepository.createTask(task))
+               .thenReturn(true);
 
         Assertions.assertThat(defaultTaskService.createTask(task))
                   .as("Result is false.")
@@ -45,7 +46,8 @@ public class TaskServiceTest {
         tasks.add(new TaskEntity(2, "title", "description", "time", "status", 2));
         tasks.add(new TaskEntity(3, "title", "description", "time", "status", 1));
         tasks.add(new TaskEntity(4, "title", "description", "time", "status", 3));
-        Mockito.when(defaultTaskRepository.getAllTasks()).thenReturn(tasks);
+        Mockito.when(defaultTaskRepository.getAllTasks())
+               .thenReturn(tasks);
 
         Collection<SimpleTaskModel> result = defaultTaskService.getAllTask();
         Assertions.assertThat(result)
@@ -59,7 +61,8 @@ public class TaskServiceTest {
     @Test
     public void getWorkerByIdTest() {
         Task task = new TaskEntity(1, "title", "description", "time", "status", 1);
-        Mockito.when(defaultTaskRepository.getTaskById(1)).thenReturn(Optional.of(task));
+        Mockito.when(defaultTaskRepository.getTaskById(1))
+               .thenReturn(Optional.of(task));
 
         Assertions.assertThat(defaultTaskService.getTaskById(1))
                   .as("Result is null.")
@@ -69,7 +72,8 @@ public class TaskServiceTest {
     @Test
     public void modifyWorkerTest() {
         ModifyTaskModel task = new ModifyTaskModel("title", "description", "time", "status");
-        Mockito.when(defaultTaskService.updateTask(1, task)).thenReturn(true);
+        Mockito.when(defaultTaskService.updateTask(1, task))
+               .thenReturn(true);
 
         Assertions.assertThat(defaultTaskService.updateTask(1, task))
                   .as("Result is false.")
@@ -78,7 +82,8 @@ public class TaskServiceTest {
 
     @Test
     public void deleteWorkerByIdTest() {
-        Mockito.when(defaultTaskService.deleteTaskById(1)).thenReturn(true);
+        Mockito.when(defaultTaskService.deleteTaskById(1))
+               .thenReturn(true);
 
         Assertions.assertThat(defaultTaskService.deleteTaskById(1))
                   .as("Result is false.")
@@ -87,7 +92,8 @@ public class TaskServiceTest {
 
     @Test
     public void assignWorkerToTaskTest() {
-        Mockito.when(defaultTaskRepository.assignWorkerToTask(1, 2)).thenReturn(true);
+        Mockito.when(defaultTaskRepository.assignWorkerToTask(1, 2))
+               .thenReturn(true);
 
         Assertions.assertThat(defaultTaskService.assignWorkerToTask(1, 2))
                   .as("Result is false.")

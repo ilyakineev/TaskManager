@@ -72,7 +72,7 @@ public class TaskController {
     /**
      * Обнавление задачи.
      * @param id Идентификатор задачи.
-     * @param task Задача.
+     * @param task Модель изменения задачи.
      * @return Результат операции.
      */
     @PutMapping(value = "/tasks/{id}")

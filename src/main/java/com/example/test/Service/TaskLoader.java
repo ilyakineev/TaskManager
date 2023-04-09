@@ -1,28 +1,67 @@
 package com.example.test.Service;
 
-import java.util.Optional;
-import org.springframework.context.annotation.Scope;
+import com.example.test.Model.WorkSpace;
+import com.example.test.Model.WorkerModel;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.stream.Collectors;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.WebApplicationContext;
 
 @Service
-@Scope(WebApplicationContext.SCOPE_APPLICATION)
-public class TaskLoader implements Runnable {
+public class TaskLoader {
+    private final Logger LOGGER = LoggerFactory.getLogger(TaskManager.class);
 
-    private TaskManager taskManager;
+    private final Collection<WorkSpace> workerPipeline;
+    private static final int maxWorkersInWorkSpace = 10;
+    private static final int minWorkersInWorkSpace = 0;
+    private int workCounter = 0;
+    private final TaskManager taskManager;
 
-    public TaskLoader(TaskManager taskManager) {this.taskManager = taskManager;}
+    @Autowired
+    public TaskLoader(TaskManager taskManager) {
+        this.taskManager = taskManager;
+        workerPipeline = new ArrayList<>();
+    }
 
-    @Override
-    public void run() {
-        while (true) {
-            try {
-                Thread.sleep(300);
-                Optional.of(taskManager.getTaskInPipeline())
-                        .ifPresent(System.out::println);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+    public synchronized boolean addTaskInPipeline(WorkerModel worker) {
+        if (workCounter < maxWorkersInWorkSpace) {
+            WorkSpace workSpace = new WorkSpace(taskManager);
+            workSpace.setWorkerModel(worker);
+            workSpace.start();
+            workerPipeline.add(workSpace);
+            workCounter++;
+            LOGGER.info("Рабочий {} занял рабочее место.", workSpace);
+            return true;
+        } else {
+            LOGGER.info("У рабочего {} нет рабочего места.", worker);
+            return false;
         }
+    }
+
+    public synchronized boolean removeWorkerInPipeline(WorkerModel worker) {
+        if (workCounter > minWorkersInWorkSpace) {
+            final WorkSpace workSpace = workerPipeline.stream()
+                                                      .filter(space -> space.getWorkerModel()
+                                                                            .equals(worker))
+                                                      .findFirst()
+                                                      .orElseGet(null);
+            workSpace.finish();
+            workerPipeline.remove(workSpace);
+            workCounter--;
+            LOGGER.info("Рабочий {} покинул рабочее место", worker);
+            return true;
+        } else {
+            LOGGER.info("Рабочего {} не было на рабочем месте", worker);
+            return false;
+        }
+    }
+
+    public Collection<WorkerModel> getStatusWork() {
+        return workerPipeline.stream()
+                             .map(WorkSpace::getWorkerModel)
+                             .collect(Collectors.toList());
     }
 }

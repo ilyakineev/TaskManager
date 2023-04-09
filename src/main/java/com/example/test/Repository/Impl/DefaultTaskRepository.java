@@ -68,7 +68,7 @@ public class DefaultTaskRepository implements TaskRepository {
 
     /**
      * Были ли изменения в таблице.
-     * @param result Количество измененых строк в таблице.
+     * @param result Количество измененных строк в таблице.
      * @return true если изменения произошли.
      */
     private static boolean isModifyEntity(int result) {

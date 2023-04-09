@@ -20,7 +20,7 @@ public interface TaskRepository {
 
     /**
      * Получение всех задач.
-     * @return Коллекция работникив.
+     * @return Коллекция задач.
      */
     Collection<Task> getAllTasks();
 
@@ -42,14 +42,14 @@ public interface TaskRepository {
     /**
      * Удаление задачи.
      * @param id Идентификатор задачи.
-     * @return Результаит операции.
+     * @return Результат операции.
      */
     boolean deleteTaskById(long id);
 
     /**
      * Назначить на задачу исполнителя.
      * @param taskId Идентификатор задачи.
-     * @param workerId Идентификатор испольнителя.
+     * @param workerId Идентификатор исполнителя.
      * @return Результат операции.
      */
     boolean assignWorkerToTask(long taskId, long workerId);

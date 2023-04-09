@@ -4,6 +4,7 @@ import com.example.test.Model.ModifyTaskModel;
 import com.example.test.Model.SimpleTaskModel;
 import com.example.test.Model.TaskModel;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Интерфейс команд при работе с задачами.
@@ -16,6 +17,7 @@ public interface TaskService {
      * @return Результат операции.
      */
     boolean createTask(TaskModel task);
+
 
     /**
      * Получение всех задач.
@@ -31,7 +33,7 @@ public interface TaskService {
     TaskModel getTaskById(long id);
 
     /**
-     * Обнавление задачи.
+     * Обновление задачи.
      * @param id Идентификатор задачи.
      * @param task Задача.
      * @return Результат операции.
@@ -48,8 +50,28 @@ public interface TaskService {
     /**
      * Назначить на задачу исполнителя.
      * @param taskId Идентификатор задачи.
-     * @param workerId Идентификатор испольнителя.
+     * @param workerId Идентификатор исполнителя.
      * @return Результат операции.
      */
     boolean assignWorkerToTask(long taskId, long workerId);
+
+    /**
+     * Поставить задачу в очередь.
+     * @param id Идентификатор задачи.
+     * @return Результат операции.
+     */
+    boolean addTaskInPipeline(long id);
+
+    /**
+     * Поставить задачи в очередь.
+     * @param tasks Список идентификатор задач.
+     * @return Результат операции.
+     */
+    boolean addTaskInPipeline(List<Long> tasks);
+
+    /**
+     * Получить статус запущенных задач.
+     * @return Результат операции.
+     */
+    Collection<TaskModel> getStatusTask();
 }

@@ -5,6 +5,7 @@ import com.example.test.Entity.Worker;
 import com.example.test.Model.WorkerModel;
 import com.example.test.Repository.Impl.DefaultWorkerRepository;
 import com.example.test.Service.Impl.DefaultWorkerService;
+import com.example.test.Service.TaskLoader;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
@@ -25,6 +26,9 @@ public class WorkerServiceTest {
 
     @MockBean
     private DefaultWorkerRepository defaultWorkerRepository;
+
+    @MockBean
+    private TaskLoader taskLoader;
 
     @Test
     public void createWorkerTest() {
@@ -86,5 +90,48 @@ public class WorkerServiceTest {
         Assertions.assertThat(defaultWorkerService.deleteWorkerById(1))
                   .as("Result is false.")
                   .isTrue();
+    }
+
+//    @Test
+//    public void addTaskInPipelineTest() {
+//        WorkerModel worker = new WorkerModel("name", "position", "avatar");
+//
+//        Mockito.when(taskLoader.addTaskInPipeline(worker))
+//               .thenReturn(true);
+//        Assertions.assertThat(defaultWorkerService.addTaskInPipeline(1))
+//                  .as("Result is false.")
+//                  .isTrue();
+//    }
+//
+//    @Test
+//    public void removeWorkerInPipelineTest() {
+//        WorkerModel worker = new WorkerModel("name", "position", "avatar");
+//
+//        Mockito.when(taskLoader.removeWorkerInPipeline(worker))
+//               .thenReturn(true);
+//        Assertions.assertThat(defaultWorkerService.removeWorkerInPipeline(1))
+//                  .as("Result is false.")
+//                  .isTrue();
+//    }
+
+    @Test
+    public void getStatusWorkTest() {
+        Collection<WorkerModel> workers = new ArrayList<>();
+        workers.add(new WorkerModel("name", "position", "avatar"));
+        workers.add(new WorkerModel("name", "position", "avatar"));
+        workers.add(new WorkerModel("name", "position", "avatar"));
+
+        Mockito.when(taskLoader.getStatusWork())
+               .thenReturn(workers);
+        final Collection<WorkerModel> result = defaultWorkerService.getStatusWorkers();
+        Assertions.assertThat(result)
+                  .as("Result is null.")
+                  .isNotNull();
+        Assertions.assertThat(result)
+                  .as("Result is empty.")
+                  .isNotEmpty();
+        Assertions.assertThat(result)
+                  .as("Result is incorrect.")
+                  .containsAll(workers);
     }
 }

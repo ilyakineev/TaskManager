@@ -7,6 +7,7 @@ import com.example.test.Model.SimpleTaskModel;
 import com.example.test.Model.TaskModel;
 import com.example.test.Repository.Impl.DefaultTaskRepository;
 import com.example.test.Service.Impl.DefaultTaskService;
+import com.example.test.Service.TaskManager;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
@@ -27,6 +28,9 @@ public class TaskServiceTest {
 
     @MockBean
     private DefaultTaskRepository defaultTaskRepository;
+
+    @MockBean
+    private TaskManager taskManager;
 
     @Test
     public void createTaskTest() {
@@ -59,7 +63,7 @@ public class TaskServiceTest {
     }
 
     @Test
-    public void getWorkerByIdTest() {
+    public void getTaskByIdTest() {
         Task task = new TaskEntity(1, "title", "description", "time", "status", 1);
         Mockito.when(defaultTaskRepository.getTaskById(1))
                .thenReturn(Optional.of(task));
@@ -70,7 +74,7 @@ public class TaskServiceTest {
     }
 
     @Test
-    public void modifyWorkerTest() {
+    public void modifyTaskTest() {
         ModifyTaskModel task = new ModifyTaskModel("title", "description", "time", "status");
         Mockito.when(defaultTaskService.updateTask(1, task))
                .thenReturn(true);
@@ -81,7 +85,7 @@ public class TaskServiceTest {
     }
 
     @Test
-    public void deleteWorkerByIdTest() {
+    public void deleteTaskByIdTest() {
         Mockito.when(defaultTaskService.deleteTaskById(1))
                .thenReturn(true);
 
@@ -98,5 +102,47 @@ public class TaskServiceTest {
         Assertions.assertThat(defaultTaskService.assignWorkerToTask(1, 2))
                   .as("Result is false.")
                   .isTrue();
+    }
+
+//    @Test
+//    public void addTaskInPipelineTest() {
+//        TaskModel task = new TaskModel("title", "description", "time", "status", 1);
+//
+//        Mockito.when(taskManager.addTaskInPipeline(task))
+//               .thenReturn(true);
+//        Assertions.assertThat(defaultTaskService.addTaskInPipeline(1))
+//                  .as("Result is false.")
+//                  .isTrue();
+//    }
+//
+//    @Test
+//    public void addTasksInPipelineTest() {
+//        TaskModel task = new TaskModel("title", "description", "time", "status", 1);
+//
+//        Mockito.when(taskManager.addTaskInPipeline(task))
+//               .thenReturn(true);
+//        Assertions.assertThat(defaultTaskService.addTaskInPipeline(1))
+//                  .as("Result is false.")
+//                  .isTrue();
+//    }
+
+    @Test
+    public void getStatusWorkTest() {
+        Collection<TaskModel> tasks = new ArrayList<>();
+        tasks.add(new TaskModel("title", "description", "time", "status", 1));
+        tasks.add(new TaskModel("title", "description", "time", "status", 1));
+        tasks.add(new TaskModel("title", "description", "time", "status", 1));
+        Mockito.when(taskManager.getStatusTask())
+               .thenReturn(tasks);
+        final Collection<TaskModel> result = defaultTaskService.getStatusTask();
+        Assertions.assertThat(result)
+                  .as("Result is null.")
+                  .isNotNull();
+        Assertions.assertThat(result)
+                  .as("Result is empty.")
+                  .isNotEmpty();
+        Assertions.assertThat(result)
+                  .as("Result is incorrect.")
+                  .containsAll(tasks);
     }
 }

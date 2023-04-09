@@ -1,7 +1,10 @@
 package com.example.test.Service;
 
 import com.example.test.Model.TaskModel;
+import java.util.Collection;
 import java.util.LinkedList;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.WebApplicationContext;
@@ -9,6 +12,7 @@ import org.springframework.web.context.WebApplicationContext;
 @Service
 @Scope(WebApplicationContext.SCOPE_APPLICATION)
 public class TaskManager {
+    private final Logger LOGGER = LoggerFactory.getLogger(TaskManager.class);
     private final LinkedList<TaskModel> taskPipeline;
     private static final int maxTasksInPipeline = 100;
     private static final int minTasksInPipeline = 0;
@@ -22,9 +26,9 @@ public class TaskManager {
         try {
             if (taskCounter < maxTasksInPipeline) {
                 notifyAll();
-                taskPipeline.addLast(task);
-                System.out.println("Задач в очереди: " + taskCounter);
+                taskPipeline.add(task);
                 taskCounter++;
+                LOGGER.info("Задач в очереди: {}", taskCounter);
             } else {
                 wait();
                 return false;
@@ -38,17 +42,22 @@ public class TaskManager {
     public synchronized TaskModel getTaskInPipeline() {
         try {
             if (taskCounter > minTasksInPipeline) {
-                System.out.println("Задач в очереди: " + taskCounter);
-                taskCounter--;
                 notifyAll();
-                return taskPipeline.getFirst();
+                LOGGER.info("Задач в очереди: {}", taskCounter);
+                TaskModel first = taskPipeline.getFirst();
+                taskPipeline.removeFirst();
+                taskCounter--;
+                return first;
             }
-            System.out.println("Задач закончились");
+            LOGGER.info("Задач закончились.");
             wait();
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
         return null;
     }
 
+    public Collection<TaskModel> getStatusTask() {
+        return taskPipeline.stream().toList();
+    }
 }

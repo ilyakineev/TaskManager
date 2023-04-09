@@ -17,7 +17,7 @@ public interface WorkerService {
 
     /**
      * Получение всех работников.
-     * @return Коллекция работникив.
+     * @return Коллекция работников.
      */
     Collection<WorkerModel> getAllWorkers();
 
@@ -39,7 +39,27 @@ public interface WorkerService {
     /**
      * Удаление работника.
      * @param id Идентификатор работника.
-     * @return результаит операции.
+     * @return результат операции.
      */
     boolean deleteWorkerById(long id);
+
+    /**
+     * Активировать рабочего.
+     * @param workerId Идентификатор задачи.
+     * @return Результат операции.
+     */
+    boolean addTaskInPipeline(long workerId);
+
+    /**
+     * Деактивировать рабочего.
+     * @param workerId Идентификатор рабочего.
+     * @return Результат операции.
+     */
+    boolean removeWorkerInPipeline(long workerId);
+
+    /**
+     * Получить статус активированных задач.
+     * @return Результат операции.
+     */
+    Collection<WorkerModel> getStatusWorkers();
 }

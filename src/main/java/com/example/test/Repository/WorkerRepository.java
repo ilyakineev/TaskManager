@@ -19,7 +19,7 @@ public interface WorkerRepository {
 
     /**
      * Получение всех работников.
-     * @return Коллекция работникив.
+     * @return Коллекция работников.
      */
     Collection<Worker> getAllWorkers();
 
@@ -41,7 +41,7 @@ public interface WorkerRepository {
     /**
      * Удаление работника.
      * @param id Идентификатор работника.
-     * @return результаит операции.
+     * @return результат операции.
      */
     boolean deleteWorkerById(long id);
 }

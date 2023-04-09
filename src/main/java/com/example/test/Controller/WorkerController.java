@@ -42,7 +42,7 @@ public class WorkerController {
 
     /**
      * Получение всех работников.
-     * @return Коллекция работникив.
+     * @return Коллекция работников.
      */
     @GetMapping(value = "/workers")
     public ResponseEntity<Collection<WorkerModel>> readWorkers() {
@@ -84,7 +84,7 @@ public class WorkerController {
     /**
      * Удаление работника.
      * @param id Идентификатор работника.
-     * @return Результаит операции.
+     * @return Результат операции.
      */
     @DeleteMapping(value = "/workers/{id}")
     public ResponseEntity<?> deleteWorker(
@@ -92,5 +92,43 @@ public class WorkerController {
         return workerService.deleteWorkerById(id)
                 ? new ResponseEntity<>(id, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
+    }
+
+    /**
+     * Активировать рабочего.
+     * @param workerId Идентификатор задачи.
+     * @return Результат операции.
+     */
+    @PutMapping(value = "/worker/{workerId}")
+    public ResponseEntity<?> addTaskInPipeline(
+            @PathVariable(name = "workerId") long workerId) {
+        return workerService.addTaskInPipeline(workerId)
+                ? new ResponseEntity<>(HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
+    }
+
+    /**
+     * Деактивировать рабочего.
+     * @param workerId Идентификатор рабочего.
+     * @return Результат операции.
+     */
+    @DeleteMapping(value = "/worker/{workerId}")
+    public ResponseEntity<?> removeWorkerInPipeline(
+            @PathVariable(name = "workerId") long workerId) {
+        return workerService.removeWorkerInPipeline(workerId)
+                ? new ResponseEntity<>(HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
+    }
+
+    /**
+     * Получить статус активированных задач.
+     * @return Результат операции.
+     */
+    @GetMapping(value = "/workers/status")
+    public ResponseEntity<Collection<WorkerModel>> getStatusWorkers() {
+        Collection<WorkerModel> workers = workerService.getStatusWorkers();
+        return !Objects.isNull(workers) && !workers.isEmpty()
+                ? new ResponseEntity<>(workers, HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }

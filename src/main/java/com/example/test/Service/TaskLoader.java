@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,7 +16,10 @@ public class TaskLoader {
     private final Logger LOGGER = LoggerFactory.getLogger(TaskManager.class);
 
     private final Collection<WorkSpace> workerPipeline;
+    @Value("${taskLoader.maxWorkersInWorkSpace}")
     private static final int maxWorkersInWorkSpace = 10;
+
+    @Value("${taskLoader.minWorkersInWorkSpace}")
     private static final int minWorkersInWorkSpace = 0;
     private int workCounter = 0;
     private final TaskManager taskManager;
@@ -44,8 +48,7 @@ public class TaskLoader {
     public synchronized boolean removeWorkerInPipeline(WorkerModel worker) {
         if (workCounter > minWorkersInWorkSpace) {
             final WorkSpace workSpace = workerPipeline.stream()
-                                                      .filter(space -> space.getWorkerModel()
-                                                                            .equals(worker))
+                                                      .filter(space -> space.getWorkerModel().equals(worker))
                                                       .findFirst()
                                                       .orElseGet(null);
             workSpace.finish();

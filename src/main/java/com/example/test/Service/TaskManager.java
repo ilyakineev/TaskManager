@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.LinkedList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.WebApplicationContext;
@@ -14,8 +15,12 @@ import org.springframework.web.context.WebApplicationContext;
 public class TaskManager {
     private final Logger LOGGER = LoggerFactory.getLogger(TaskManager.class);
     private final LinkedList<TaskModel> taskPipeline;
-    private static final int maxTasksInPipeline = 100;
-    private static final int minTasksInPipeline = 0;
+
+    @Value("${taskManager.maxTasksInPipeline}")
+    private int maxTasksInPipeline;
+
+    @Value("${taskManager.minTasksInPipeline}")
+    private int minTasksInPipeline;
     private int taskCounter = 0;
 
     public TaskManager() {

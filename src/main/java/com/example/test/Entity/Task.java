@@ -21,7 +21,7 @@ public interface Task {
     String getDescription();
 
     /**
-     * @return Время создании задачи.
+     * @return Время о создании задачи.
      */
     String getTime();
 

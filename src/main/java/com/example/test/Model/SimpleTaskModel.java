@@ -19,7 +19,11 @@ public class SimpleTaskModel implements Serializable {
 
     public SimpleTaskModel() {}
 
-    public SimpleTaskModel(long id, String title, String status) {
+    public SimpleTaskModel(
+            long id,
+            String title,
+            String status)
+    {
         this.id = id;
         this.title = title;
         this.status = status;

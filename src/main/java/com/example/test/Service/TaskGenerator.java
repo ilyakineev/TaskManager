@@ -8,7 +8,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 @Service
 @Scope(WebApplicationContext.SCOPE_APPLICATION)
-public class TaskGenerator implements  Runnable{
+public class TaskGenerator implements Runnable {
 
     private final TaskManager taskManager;
     private final int taskCount;

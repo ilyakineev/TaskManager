@@ -1,12 +1,10 @@
 package com.example.test.ServiceTest;
 
-import com.example.test.Entity.Impl.WorkerEntity;
-import com.example.test.Entity.Worker;
 import com.example.test.Model.WorkerModel;
 import com.example.test.Repository.Impl.DefaultWorkerRepository;
 import com.example.test.Service.Impl.DefaultWorkerService;
 import com.example.test.Service.TaskLoader;
-import java.util.ArrayList;
+import com.example.test.TestContainer;
 import java.util.Collection;
 import java.util.Optional;
 import org.assertj.core.api.Assertions;
@@ -32,24 +30,18 @@ public class WorkerServiceTest {
 
     @Test
     public void createWorkerTest() {
-        WorkerModel worker = new WorkerModel("name", "position", "avatar");
-        Mockito.when(defaultWorkerRepository.createWorker(worker))
+        Mockito.when(defaultWorkerRepository.createWorker(TestContainer.WORKER_MODEL))
                .thenReturn(true);
 
-        Assertions.assertThat(defaultWorkerService.createWorker(worker))
+        Assertions.assertThat(defaultWorkerService.createWorker(TestContainer.WORKER_MODEL))
                   .as("Result is false.")
                   .isTrue();
     }
 
     @Test
     public void getAllWorkerTest() {
-        Collection<Worker> workers = new ArrayList<>();
-        workers.add(new WorkerEntity(1, "name", "position", "avatar"));
-        workers.add(new WorkerEntity(2, "name", "position", "avatar"));
-        workers.add(new WorkerEntity(3, "name", "position", "avatar"));
-        workers.add(new WorkerEntity(4, "name", "position", "avatar"));
         Mockito.when(defaultWorkerRepository.getAllWorkers())
-               .thenReturn(workers);
+               .thenReturn(TestContainer.WORKERS_ENTITY);
 
         final Collection<WorkerModel> result = defaultWorkerService.getAllWorkers();
         Assertions.assertThat(result)
@@ -62,9 +54,8 @@ public class WorkerServiceTest {
 
     @Test
     public void getWorkerByIdTest() {
-        Worker worker = new WorkerEntity(1, "name", "position", "avatar");
         Mockito.when(defaultWorkerRepository.getWorkerById(1))
-               .thenReturn(Optional.of(worker));
+               .thenReturn(Optional.of(TestContainer.WORKER_ENTITY));
 
         Assertions.assertThat(defaultWorkerService.getWorkerById(1))
                   .as("Result is false.")
@@ -73,11 +64,10 @@ public class WorkerServiceTest {
 
     @Test
     public void modifyWorkerTest() {
-        WorkerModel worker = new WorkerModel("name", "position", "avatar");
-        Mockito.when(defaultWorkerRepository.modifyWorker(1, worker))
+        Mockito.when(defaultWorkerRepository.modifyWorker(1, TestContainer.WORKER_MODEL))
                .thenReturn(true);
 
-        Assertions.assertThat(defaultWorkerService.modifyWorker(1, worker))
+        Assertions.assertThat(defaultWorkerService.modifyWorker(1, TestContainer.WORKER_MODEL))
                   .as("Result is false.")
                   .isTrue();
     }
@@ -116,13 +106,9 @@ public class WorkerServiceTest {
 
     @Test
     public void getStatusWorkTest() {
-        Collection<WorkerModel> workers = new ArrayList<>();
-        workers.add(new WorkerModel("name", "position", "avatar"));
-        workers.add(new WorkerModel("name", "position", "avatar"));
-        workers.add(new WorkerModel("name", "position", "avatar"));
-
         Mockito.when(taskLoader.getStatusWork())
-               .thenReturn(workers);
+               .thenReturn(TestContainer.WORKERS);
+
         final Collection<WorkerModel> result = defaultWorkerService.getStatusWorkers();
         Assertions.assertThat(result)
                   .as("Result is null.")
@@ -132,6 +118,6 @@ public class WorkerServiceTest {
                   .isNotEmpty();
         Assertions.assertThat(result)
                   .as("Result is incorrect.")
-                  .containsAll(workers);
+                  .containsAll(TestContainer.WORKERS);
     }
 }

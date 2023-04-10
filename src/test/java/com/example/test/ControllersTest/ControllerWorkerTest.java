@@ -1,9 +1,7 @@
 package com.example.test.ControllersTest;
 
-import com.example.test.Model.WorkerModel;
+import com.example.test.TestContainer;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.ArrayList;
-import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -29,38 +27,30 @@ public class ControllerWorkerTest {
 
     @Test
     public void createWorkerTest() throws Exception {
-        WorkerModel worker = new WorkerModel("name", "position", "avatar");
         mockMvc.perform(post("/workers")
-                       .content(objectMapper.writeValueAsString(worker))
+                       .content(objectMapper.writeValueAsString(TestContainer.WORKER_MODEL))
                        .contentType(MediaType.APPLICATION_JSON))
                .andExpect(status().isCreated());
     }
 
     @Test
     public void readWorkerTest() throws Exception {
-        final List<WorkerModel> workers = new ArrayList<>();
-        workers.add(new WorkerModel("name", "position", "avatar"));
-        workers.add(new WorkerModel("name", "position", "avatar"));
-        workers.add(new WorkerModel("name", "position", "avatar"));
         mockMvc.perform(get("/workers"))
                .andExpect(status().isOk())
-               .andExpect(content().json(objectMapper.writeValueAsString(workers)));
+               .andExpect(content().json(objectMapper.writeValueAsString(TestContainer.WORKERS)));
     }
 
     @Test
     public void readWorkerByIdTest() throws Exception {
-        WorkerModel worker = new WorkerModel("name", "position", "avatar");
         mockMvc.perform(get("/workers/{id}", 2))
                .andExpect(status().isOk())
-               .andExpect(content().json(objectMapper.writeValueAsString(worker)));
-
+               .andExpect(content().json(objectMapper.writeValueAsString(TestContainer.WORKER_MODEL)));
     }
 
     @Test
     public void updateWorkerByIdTest() throws Exception {
-        WorkerModel worker = new WorkerModel("name", "position", "avatar");
         mockMvc.perform(put("/workers/{id}", 2)
-                       .content(objectMapper.writeValueAsString(worker))
+                       .content(objectMapper.writeValueAsString(TestContainer.WORKER_MODEL))
                        .contentType(MediaType.APPLICATION_JSON))
                .andExpect(status().isOk());
     }

@@ -1,11 +1,7 @@
 package com.example.test.ControllersTest;
 
-import com.example.test.Model.ModifyTaskModel;
-import com.example.test.Model.SimpleTaskModel;
-import com.example.test.Model.TaskModel;
+import com.example.test.TestContainer;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.ArrayList;
-import java.util.Collection;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -14,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -31,38 +28,30 @@ public class ControllerTaskTest {
 
     @Test
     public void createTaskTest() throws Exception {
-        TaskModel task = new TaskModel("title", "description", "time", "status", 2);
-        mockMvc.perform(post("/tasks").content(objectMapper.writeValueAsString(task))
+        mockMvc.perform(post("/tasks").content(objectMapper.writeValueAsString(TestContainer.TASK_MODEL))
                                       .contentType(MediaType.APPLICATION_JSON))
                .andExpect(status().isCreated());
     }
 
     @Test
     public void readTasksTest() throws Exception {
-        Collection<SimpleTaskModel> tasks = new ArrayList<>();
-        tasks.add(new SimpleTaskModel(1, "title", "status"));
-        tasks.add(new SimpleTaskModel(2, "title", "status"));
-        tasks.add(new SimpleTaskModel(3, "title", "status"));
-        tasks.add(new SimpleTaskModel(4, "title", "status"));
-        tasks.add(new SimpleTaskModel(5, "title", "status"));
         mockMvc.perform(get("/tasks"))
                .andExpect(status().isOk())
-               .andExpect(content().json(objectMapper.writeValueAsString(tasks)));
+               .andExpect(content().json(objectMapper.writeValueAsString(TestContainer.TASKS)));
     }
 
     @Test
     public void readTaskByIdTest() throws Exception {
-        TaskModel task = new TaskModel("title", "description", "time", "status", 2);
-        mockMvc.perform(get("/tasks/{id}", 2))
+        mockMvc.perform(get("/tasks/{id}", 1))
                .andExpect(status().isOk())
-               .andExpect(content().json(objectMapper.writeValueAsString(task)));
+               .andExpect(content().json(objectMapper.writeValueAsString(TestContainer.TASK_MODEL)));
     }
 
     @Test
     public void updateTaskByIdTest() throws Exception {
-        ModifyTaskModel model = new ModifyTaskModel("title", "description", "time", "status");
-        mockMvc.perform(put("/tasks/{id}", 2).content(objectMapper.writeValueAsString(model))
-                                             .contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(put("/tasks/{id}", 3)
+                       .content(objectMapper.writeValueAsString(TestContainer.MODIFY_TASK_MODEL))
+                       .contentType(MediaType.APPLICATION_JSON))
                .andExpect(status().isOk());
     }
 
@@ -74,7 +63,7 @@ public class ControllerTaskTest {
 
     @Test
     public void assignWorkerToTask() throws Exception {
-        mockMvc.perform(put("/task/{taskId}/{workerId}", 2, 3))
+        mockMvc.perform(patch("/tasks/{taskId}/{workerId}", 3, 1))
                .andExpect(status().isOk());
     }
 }

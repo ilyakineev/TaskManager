@@ -9,13 +9,13 @@ CREATE TABLE worker
 );
 
 INSERT INTO worker(name, position, avatar)
-VALUES ('name', 'position', 'avatar');
+VALUES ('Ivan', 'Worker', 'avatar');
 INSERT INTO worker(name, position, avatar)
-VALUES ('name', 'position', 'avatar');
+VALUES ('Max', 'Manager', 'avatar');
 INSERT INTO worker(name, position, avatar)
-VALUES ('name', 'position', 'avatar');
+VALUES ('Tom', 'Taxi driver', 'avatar');
 INSERT INTO worker(name, position, avatar)
-VALUES ('name', 'position', 'avatar');
+VALUES ('Jim', 'Security guard', 'avatar');
 
 CREATE TABLE task
 (

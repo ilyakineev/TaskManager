@@ -1,9 +1,8 @@
 package com.example.test.RepositoryTest;
 
 import com.example.test.Entity.Task;
-import com.example.test.Model.ModifyTaskModel;
-import com.example.test.Model.TaskModel;
 import com.example.test.Repository.Impl.DefaultTaskRepository;
+import com.example.test.TestContainer;
 import java.util.Collection;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -20,9 +19,7 @@ public class TaskRepositoryTest {
 
     @Test
     public void createWorkerTest() {
-        TaskModel task = new TaskModel("title", "description", "time", "status", 3);
-
-        Assertions.assertThat(defaultTaskRepository.createTask(task))
+        Assertions.assertThat(defaultTaskRepository.createTask(TestContainer.TASK_MODEL))
                   .as("Result is false.")
                   .isTrue();
     }
@@ -40,7 +37,7 @@ public class TaskRepositoryTest {
 
     @Test
     public void getWorkerByIdTest() {
-        Assertions.assertThat(defaultTaskRepository.getTaskById(2)
+        Assertions.assertThat(defaultTaskRepository.getTaskById(1)
                                                    .orElse(null))
                   .as("Result is false.")
                   .isNotNull();
@@ -48,18 +45,17 @@ public class TaskRepositoryTest {
 
     @Test
     public void modifyWorkerTest() {
-        ModifyTaskModel task = new ModifyTaskModel("title", "description", "time", "status");
-        Assertions.assertThat(defaultTaskRepository.modifyTask(3, task))
+        Assertions.assertThat(defaultTaskRepository.modifyTask(3, TestContainer.MODIFY_TASK_MODEL))
                   .as("Result is false.")
                   .isTrue();
     }
 
-//    @Test
-//    public void deleteWorkerByIdTest() {
-//        Assertions.assertThat(defaultTaskRepository.deleteTaskById(2))
-//                  .as("Result is false.")
-//                  .isTrue();
-//    }
+    @Test
+    public void deleteWorkerByIdTest() {
+        Assertions.assertThat(defaultTaskRepository.deleteTaskById(2))
+                  .as("Result is false.")
+                  .isTrue();
+    }
 
     @Test
     public void assignWorkerToTaskTest() {

@@ -8,7 +8,7 @@ import com.example.test.Model.TaskModel;
 import com.example.test.Repository.Impl.DefaultTaskRepository;
 import com.example.test.Service.Impl.DefaultTaskService;
 import com.example.test.Service.TaskManager;
-import java.util.ArrayList;
+import com.example.test.TestContainer;
 import java.util.Collection;
 import java.util.Optional;
 import org.assertj.core.api.Assertions;
@@ -34,24 +34,18 @@ public class TaskServiceTest {
 
     @Test
     public void createTaskTest() {
-        TaskModel task = new TaskModel("title", "description", "time", "status", 1);
-        Mockito.when(defaultTaskRepository.createTask(task))
+        Mockito.when(defaultTaskRepository.createTask(TestContainer.TASK_MODEL))
                .thenReturn(true);
 
-        Assertions.assertThat(defaultTaskService.createTask(task))
+        Assertions.assertThat(defaultTaskService.createTask(TestContainer.TASK_MODEL))
                   .as("Result is false.")
                   .isTrue();
     }
 
     @Test
     public void getAllTaskTest() {
-        Collection<Task> tasks = new ArrayList<>();
-        tasks.add(new TaskEntity(1, "title", "description", "time", "status", 1));
-        tasks.add(new TaskEntity(2, "title", "description", "time", "status", 2));
-        tasks.add(new TaskEntity(3, "title", "description", "time", "status", 1));
-        tasks.add(new TaskEntity(4, "title", "description", "time", "status", 3));
         Mockito.when(defaultTaskRepository.getAllTasks())
-               .thenReturn(tasks);
+               .thenReturn(TestContainer.TASKS_ENTITY);
 
         Collection<SimpleTaskModel> result = defaultTaskService.getAllTask();
         Assertions.assertThat(result)
@@ -128,12 +122,8 @@ public class TaskServiceTest {
 
     @Test
     public void getStatusWorkTest() {
-        Collection<TaskModel> tasks = new ArrayList<>();
-        tasks.add(new TaskModel("title", "description", "time", "status", 1));
-        tasks.add(new TaskModel("title", "description", "time", "status", 1));
-        tasks.add(new TaskModel("title", "description", "time", "status", 1));
         Mockito.when(taskManager.getStatusTask())
-               .thenReturn(tasks);
+               .thenReturn(TestContainer.TASKS_MODEL);
         final Collection<TaskModel> result = defaultTaskService.getStatusTask();
         Assertions.assertThat(result)
                   .as("Result is null.")
@@ -143,6 +133,6 @@ public class TaskServiceTest {
                   .isNotEmpty();
         Assertions.assertThat(result)
                   .as("Result is incorrect.")
-                  .containsAll(tasks);
+                  .containsAll(TestContainer.TASKS_MODEL);
     }
 }

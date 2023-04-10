@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -106,8 +107,8 @@ public class TaskController {
      * @param workerId Идентификатор исполнителя.
      * @return Результат операции.
      */
-    @PutMapping(value = "/task/{taskId}/{workerId}")
-    public ResponseEntity<?> modifyTask(
+    @PatchMapping(value = "/tasks/{taskId}/{workerId}")
+    public ResponseEntity<?> assignWorkerToTask(
             @PathVariable(name = "taskId") long taskId,
             @PathVariable(name = "workerId") long workerId) {
         return taskService.assignWorkerToTask(taskId, workerId)

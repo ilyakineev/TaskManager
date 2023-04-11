@@ -27,7 +27,7 @@ public class TestContainer {
             new WorkerModel("Max", "Manager", "avatar"),
             new WorkerModel("Tom", "Taxi driver", "avatar")
     );
-    public static final Worker WORKER_ENTITY = new WorkerEntity(1, "name", "position", "avatar");
+    public static final Worker WORKER_ENTITY = new WorkerEntity(1, "Ivan", "Worker", "avatar");
     public static final Collection<Worker> WORKERS_ENTITY = List.of(
             new WorkerEntity(1, "Ivan", "Worker", "avatar"),
             new WorkerEntity(2, "Max", "Manager", "avatar"),

@@ -24,8 +24,7 @@ CREATE TABLE task
     description varchar(255),
     time        varchar(255),
     status      varchar(255),
-    performer   INTEGER,
-    FOREIGN KEY (performer) REFERENCES worker (id)
+    performer   INTEGER
 );
 INSERT INTO task(title, description, time, status, performer)
 VALUES ('title', 'description', 'time', 'status', 1);

@@ -6,6 +6,7 @@ import com.example.test.Service.TaskLoader;
 import com.example.test.Service.WorkerService;
 import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,7 +17,10 @@ public class DefaultWorkerService implements WorkerService {
     private final TaskLoader taskLoader;
 
     @Autowired
-    DefaultWorkerService(WorkerRepository workerRepository, TaskLoader taskLoader) {
+    DefaultWorkerService(
+            @Qualifier("JPAWorkerRepository") WorkerRepository workerRepository,
+            TaskLoader taskLoader
+    ) {
         this.workerRepository = workerRepository;
         this.taskLoader = taskLoader;
     }

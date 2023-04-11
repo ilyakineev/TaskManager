@@ -1,11 +1,30 @@
 package com.example.test.Entity.Impl;
 
 import com.example.test.Entity.Task;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.NamedQuery;
+import jakarta.persistence.Table;
 
 /**
  * Задача.
  */
+@NamedQuery(name = TaskEntity.GET_ALL_TASKS,
+        query = "SELECT task FROM TaskEntity task")
+@NamedQuery(name = TaskEntity.ASSIGN_PERFORMER,
+        query = "UPDATE TaskEntity task " +
+                "SET task.performer = :workerId " +
+                "WHERE task.id = :taskId")
+@Entity
+@Table(name = "task")
 public class TaskEntity implements Task {
+    public static final String GET_ALL_TASKS = "TaskEntity.getAllTasks";
+    public static final String ASSIGN_PERFORMER = "TaskEntity.assignPerformer";
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String title;
     private String description;
@@ -14,6 +33,18 @@ public class TaskEntity implements Task {
     private long performer;
 
     public TaskEntity() {}
+
+    public TaskEntity(
+            String title,
+            String description,
+            String time,
+            String status
+    ) {
+        this.title = title;
+        this.description = description;
+        this.time = time;
+        this.status = status;
+    }
 
     public TaskEntity(
             long id,

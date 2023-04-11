@@ -11,11 +11,11 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class DefaultWorkerRepository implements WorkerRepository {
+public class JDBCWorkerRepository implements WorkerRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
-    public DefaultWorkerRepository(JdbcTemplate jdbcTemplate) {
+    public JDBCWorkerRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 

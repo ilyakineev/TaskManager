@@ -15,11 +15,11 @@ import org.springframework.stereotype.Repository;
  * Репозиторий задач.
  */
 @Repository
-public class DefaultTaskRepository implements TaskRepository {
+public class JDBCTaskRepository implements TaskRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
-    public DefaultTaskRepository(JdbcTemplate jdbcTemplate) {
+    public JDBCTaskRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 

@@ -5,7 +5,8 @@ import com.example.test.Entity.Task;
 import com.example.test.Model.ModifyTaskModel;
 import com.example.test.Model.SimpleTaskModel;
 import com.example.test.Model.TaskModel;
-import com.example.test.Repository.Impl.DefaultTaskRepository;
+import com.example.test.Repository.Impl.JDBCTaskRepository;
+import com.example.test.Repository.Impl.JPATaskRepository;
 import com.example.test.Service.Impl.DefaultTaskService;
 import com.example.test.Service.TaskManager;
 import com.example.test.TestContainer;
@@ -27,7 +28,7 @@ public class TaskServiceTest {
     private DefaultTaskService defaultTaskService;
 
     @MockBean
-    private DefaultTaskRepository defaultTaskRepository;
+    private JPATaskRepository defaultTaskRepository;
 
     @MockBean
     private TaskManager taskManager;

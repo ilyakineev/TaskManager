@@ -1,7 +1,8 @@
 package com.example.test.ServiceTest;
 
 import com.example.test.Model.WorkerModel;
-import com.example.test.Repository.Impl.DefaultWorkerRepository;
+import com.example.test.Repository.Impl.JDBCWorkerRepository;
+import com.example.test.Repository.Impl.JPAWorkerRepository;
 import com.example.test.Service.Impl.DefaultWorkerService;
 import com.example.test.Service.TaskLoader;
 import com.example.test.TestContainer;
@@ -23,7 +24,7 @@ public class WorkerServiceTest {
     private DefaultWorkerService defaultWorkerService;
 
     @MockBean
-    private DefaultWorkerRepository defaultWorkerRepository;
+    private JPAWorkerRepository defaultWorkerRepository;
 
     @MockBean
     private TaskLoader taskLoader;

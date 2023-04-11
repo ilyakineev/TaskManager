@@ -10,7 +10,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class DefaultTaskService implements TaskService {
@@ -21,7 +23,7 @@ public class DefaultTaskService implements TaskService {
 
     @Autowired
     public DefaultTaskService(
-            TaskRepository taskRepository,
+            @Qualifier("JPATaskRepository") TaskRepository taskRepository,
             TaskManager taskManager)
     {
         this.taskRepository = taskRepository;
@@ -34,6 +36,7 @@ public class DefaultTaskService implements TaskService {
     }
 
     @Override
+    @Transactional
     public Collection<SimpleTaskModel> getAllTask() {
         return taskRepository.getAllTasks().stream()
                               .map(entity -> new SimpleTaskModel(

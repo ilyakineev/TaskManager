@@ -1,7 +1,7 @@
 package com.example.test.RepositoryTest;
 
 import com.example.test.Entity.Task;
-import com.example.test.Repository.Impl.DefaultTaskRepository;
+import com.example.test.Repository.Impl.JPATaskRepository;
 import com.example.test.TestContainer;
 import java.util.Collection;
 import org.assertj.core.api.Assertions;
@@ -12,20 +12,20 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class TaskRepositoryTest {
+public class JPATaskRepositoryTest {
 
     @Autowired
-    private DefaultTaskRepository defaultTaskRepository;
+    private JPATaskRepository defaultTaskRepository;
 
     @Test
-    public void createWorkerTest() {
+    public void createTaskTest() {
         Assertions.assertThat(defaultTaskRepository.createTask(TestContainer.TASK_MODEL))
                   .as("Result is false.")
                   .isTrue();
     }
 
     @Test
-    public void getAllWorkerTest() {
+    public void getAllTaskTest() {
         Collection<Task> result = defaultTaskRepository.getAllTasks();
         Assertions.assertThat(result)
                   .as("Result is null.")
@@ -36,29 +36,28 @@ public class TaskRepositoryTest {
     }
 
     @Test
-    public void getWorkerByIdTest() {
-        Assertions.assertThat(defaultTaskRepository.getTaskById(1)
-                                                   .orElse(null))
+    public void getTaskByIdTest() {
+        Assertions.assertThat(defaultTaskRepository.getTaskById(1).orElse(null))
                   .as("Result is false.")
                   .isNotNull();
     }
 
     @Test
-    public void modifyWorkerTest() {
+    public void modifyTaskTest() {
         Assertions.assertThat(defaultTaskRepository.modifyTask(3, TestContainer.MODIFY_TASK_MODEL))
                   .as("Result is false.")
                   .isTrue();
     }
 
     @Test
-    public void deleteWorkerByIdTest() {
+    public void deleteTaskByIdTest() {
         Assertions.assertThat(defaultTaskRepository.deleteTaskById(2))
                   .as("Result is false.")
                   .isTrue();
     }
 
     @Test
-    public void assignWorkerToTaskTest() {
+    public void assignTaskToTaskTest() {
         Assertions.assertThat(defaultTaskRepository.assignWorkerToTask(3, 3))
                   .as("Result is false.")
                   .isTrue();
